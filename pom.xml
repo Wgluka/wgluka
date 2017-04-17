@@ -11,6 +11,7 @@
     <modules>
         <module>wgluka_core</module>
         <module>wgluka_sample</module>
+        <module>wgluka_aop</module>
     </modules>
 
     <repositories>

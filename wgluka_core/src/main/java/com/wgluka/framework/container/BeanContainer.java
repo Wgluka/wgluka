@@ -17,7 +17,7 @@ public class BeanContainer {
 
     static {
         BEAN_MAP = new HashMap<>();
-        Set<Class<?>> classSet = ClassContainer.getAllClass();
+        Set<Class<?>> classSet = ClassContainer.getAllBeanClass();
         for (Class clazz : classSet) {
             try {
                 Object object = clazz.newInstance();
@@ -43,5 +43,9 @@ public class BeanContainer {
 
     public static int size(){
         return BEAN_MAP.size();
+    }
+
+    public static void setBean(Class<?> clazz, Object object){
+        BEAN_MAP.put(clazz, object);
     }
 }

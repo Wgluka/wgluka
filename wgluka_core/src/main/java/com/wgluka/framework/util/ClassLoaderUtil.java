@@ -104,4 +104,12 @@ public class ClassLoaderUtil {
         return set;
     }
 
+    public static Set<Class<?>> loadClass(String[] name, boolean isInitialized){
+        Set<Class<?>> classSet = new HashSet<>();
+        for (String str: name){
+            classSet.add(loadClass(str.trim(), isInitialized));
+        }
+        return classSet;
+    }
+
 }

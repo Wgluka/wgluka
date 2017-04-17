@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -68,6 +69,16 @@ public class PropertiesLoaderUtil {
         if (properties.contains(key))
             return properties.getProperty(key);
         return defaultValue;
+    }
+
+    public static Properties loadFromURL(URL url){
+        Properties properties = new Properties();
+        try(InputStream inputStream = url.openConnection().getInputStream()){
+            properties.load(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to load properties from url" + url, e);
+        }
+        return properties;
     }
 
 }

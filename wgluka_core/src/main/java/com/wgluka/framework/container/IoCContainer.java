@@ -1,11 +1,17 @@
 package com.wgluka.framework.container;
 
 import com.wgluka.framework.annotation.Autowired;
+import com.wgluka.framework.util.ClassLoaderUtil;
+import com.wgluka.framework.util.FactoryLoaderUtil;
+import com.wgluka.framework.util.PropertiesLoaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by yukai on 2017/4/14.
@@ -40,6 +46,24 @@ public class IoCContainer {
                 }
             }
         }
+        loadOtherModule();
+    }
+
+    public static void loadOtherModule(){
+        Enumeration<URL> urls = FactoryLoaderUtil.getResource();
+        while (urls.hasMoreElements()){
+            URL url = urls.nextElement();
+            Properties properties = PropertiesLoaderUtil.loadFromURL(url);
+            loadOtherModule(properties.getProperty("starter"));
+        }
+    }
+
+    public static void loadOtherModule(String path){
+        if (path == null || path.isEmpty())
+            return;
+
+        String[] startClassName = path.split(",");
+        ClassLoaderUtil.loadClass(path.split(","), true);
     }
 
 }
